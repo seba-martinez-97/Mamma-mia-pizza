@@ -1,6 +1,8 @@
 import { Footer } from './components/Footer'
 import { Home } from './components/Home'
+import Login from './components/Login'
 import Navbar from './components/Navbar'
+import Register from './components/Register'
 
 
 export function PizzeriaApp() {
@@ -8,6 +10,8 @@ export function PizzeriaApp() {
     <>
       <Navbar/>
       <Home />
+      {/* <Register/> */}
+      {/* <Login/> */}
       <Footer />
     </>
   )

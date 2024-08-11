@@ -8,3 +8,31 @@
   background-size: cover;
   background-position: center;
 }
+
+
+form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  text-align: center;
+}
+
+.registro {
+  text-align: center;
+  font-size: 100px;
+  margin-bottom: 170px;
+}
+
+ p {
+  text-align: center;
+
+}
+
+.boton{
+  margin-bottom: 200px;
+}
+
+
