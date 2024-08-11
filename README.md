@@ -1,15 +1,8 @@
-# Modulo
-
-4 - React
-
-## Hito
+link al deploy: https://seba-martinez-97.github.io/Mamma-mia-pizza/
 
 Hito 1 - Pizzería Mamma Mía
 
-## Descripción
-
-Para este hito, se creara un proyecto React con Vite y Taildwind y se crean los sgtes compoentes:
-
+Para este hito, se creo un proyecto en react en donde se utilizaron los siguientes componentes:
 - Navbar
 - Footer
 - Home
