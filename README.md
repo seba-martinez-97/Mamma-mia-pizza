@@ -9,3 +9,8 @@ Para este hito, se creo un proyecto en react en donde se utilizaron los siguient
 - Header
 - CardPizza
 
+Hito 2 - Pizzería Mamma Mía
+
+Para esto hito, se crearon 2 componentes nuevos: 
+- Register
+- Login
