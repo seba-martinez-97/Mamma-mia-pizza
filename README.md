@@ -15,6 +15,5 @@ Para esto hito, se crearon 2 componentes nuevos:
 - Register
 - Login
 
-Hito 3 - Pizzería Mamma Mía
 
-Para este hito se creo un nuevo componente llamado Cart con la finalidad de activar un carrito de compra dentro de nuestra pagina.
+
