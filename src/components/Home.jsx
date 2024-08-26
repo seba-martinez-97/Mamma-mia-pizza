@@ -1,65 +1,65 @@
-import React, { useState} from 'react'
+// import React, { useState} from 'react'
 import Header from './Header'
 import CardPizza from './CardPizza'
 import Cart from './Cart'
 import { Container, Row, Col } from 'react-bootstrap'
 import { pizzaCart, pizzas } from '../utils/pizzas'
 
-export default function Home() {
-    const [cart, setCart] = useState(pizzaCart || [])
+// export default function Home() {
+//     const [cart, setCart] = useState(pizzaCart || [])
 
-    const agregarAlCarrito = (pizza) => {
-        const existingPizza = cart.find(item => item.name === pizza.name)
-        if (existingPizza) {
-            setCart(cart.map(item =>
-                item.name === pizza.name
-                    ? { ...item, count: item.count + 1 }
-                    : item
-            ))
-        } else {
-            setCart([...cart, { ...pizza, count: 1 }])
-        }
-    }
+//     const agregarAlCarrito = (pizza) => {
+//         const existingPizza = cart.find(item => item.name === pizza.name)
+//         if (existingPizza) {
+//             setCart(cart.map(item =>
+//                 item.name === pizza.name
+//                     ? { ...item, count: item.count + 1 }
+//                     : item
+//             ))
+//         } else {
+//             setCart([...cart, { ...pizza, count: 1 }])
+//         }
+//     }
 
-    const sumarCantidad = (index) => {
-        const newCart = [...cart]
-        newCart[index].count += 1
-        setCart(newCart)
-    }
+//     const sumarCantidad = (index) => {
+//         const newCart = [...cart]
+//         newCart[index].count += 1
+//         setCart(newCart)
+//     }
 
-    const restarCantidad = (index) => {
-        const newCart = [...cart]
-        if (newCart[index].count > 1) {
-            newCart[index].count -= 1
-        } else {
-            newCart.splice(index, 1)
-        }
-        setCart(newCart)
-    }
-    return (
-        <>
-            <Header/>
-            <Container fluid className="productos my-5 border-warning">
-                <Row className="cards d-flex margin-cards">
-                    {pizzas.map((pizza, index) => (
-                        <Col key={index} xs={12} sm={6} lg={4} className="d-flex justify-content-center">
-                            <CardPizza
-                                name={pizza.name}
-                                price={pizza.price}
-                                ingredients={pizza.ingredients}
-                                img={pizza.img}
-                                onAddToCart={() => agregarAlCarrito(pizza)}
-                            />
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
+//     const restarCantidad = (index) => {
+//         const newCart = [...cart]
+//         if (newCart[index].count > 1) {
+//             newCart[index].count -= 1
+//         } else {
+//             newCart.splice(index, 1)
+//         }
+//         setCart(newCart)
+//     }
+//     return (
+//         <>
+//             <Header/>
+//             <Container fluid className="productos my-5 border-warning">
+//                 <Row className="cards d-flex margin-cards">
+//                     {pizzas.map((pizza, index) => (
+//                         <Col key={index} xs={12} sm={6} lg={4} className="d-flex justify-content-center">
+//                             <CardPizza
+//                                 name={pizza.name}
+//                                 price={pizza.price}
+//                                 ingredients={pizza.ingredients}
+//                                 img={pizza.img}
+//                                 onAddToCart={() => agregarAlCarrito(pizza)}
+//                             />
+//                         </Col>
+//                     ))}
+//                 </Row>
+//             </Container>
 
-            <Cart 
-                cart={cart}
-                onSuma={sumarCantidad}
-                onResta={restarCantidad}
-            />
+//             <Cart 
+//                 cart={cart}
+//                 onSuma={sumarCantidad}
+//                 onResta={restarCantidad}
+//             />
             
             {/* <Container fluid className="productos my-5 border-warning">
                 <Row className="cards d-flex margin-cards">
@@ -89,9 +89,64 @@ export default function Home() {
                     </Col>
                 </Row>
             </Container> */}
-        </>
-    )
+//         </>
+//     )
+// }
+
+// import { useState, useEffect } from 'react'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import React from 'react'
+// import Pizza from './Pizza'
+// const Home = () => {
+//     const [pizzas , setPizzas] = useState ([])
+
+//     const obtenerInformacion = async()=>{
+//         const respuesta = await fetch('http://localhost:5000/api/pizzas')
+//         const data = await respuesta.json()
+//         console.log(data)
+//         setPizzas(data)
+//     }
+
+//     useEffect(()=>{
+//         obtenerInformacion()
+//      },[])
+
+//   return (
+//     <>
+//     <Pizza pizzas={pizzas}/>
+//     </>
+//   )
+// }
+
+// export default Home
+
+import React,{ useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
+
+
+
+
+const Home = () => {
+    const [pizzas, setPizzas] = useState ([])
+    
+    const obtenerInformacion = async ()=>{
+        const respuesta = await fetch('http://localhost:5000/api/pizzas')
+        const data = await respuesta.json()
+        setPizzas(data)
+    }
+
+    useEffect(()=>{
+        obtenerInformacion()
+    },[])
+
+  return (
+    <>
+    <CardPizza pizzas={pizzas}/>
+   
+    </>
+  )
 }
 
-
-
+export default Home
