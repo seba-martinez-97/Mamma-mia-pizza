@@ -1,61 +1,40 @@
 
-// import { toLocalString } from '../utils/toLocalString'
-// import React from 'react'   
-// import {Card, Button} from 'react-bootstrap'
 
 
-// const CardPizza = ({name, price, ingredients, img, onAddToCart }) => {
-//     return (
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Button, Card} from "react-bootstrap";
 
-
-        
-//         <Card className='my-3'>
-//             <Card.Img variant="top" src={img} />
-//             <Card.Header>
-//                 <Card.Title>🍕 Pizza {name}</Card.Title>
-//             </Card.Header>
-//             <Card.Body className='text-center p-3'>
-//                 <Card.Subtitle>Ingredientes:</Card.Subtitle>
-//                 <Card.Text>
-                    
-//                     <ul>
-//                     {ingredients.map((ingredient, index) => (
-//                         <li key={index}>{ingredient}</li>
-//                     ))}
-//                 </ul>
-//                 </Card.Text>
-//             </Card.Body>
-//             <Card.Footer className='p-3'>
-//                 <Card.Title className='text-center'>Precio: {toLocalString(price)}</Card.Title>
-//                 <div className="card-btn d-flex gap-2 justify-content-around">
-//                     <Button variant="outline-dark">Ver más</Button>
-//                     <Button variant="dark" onClick={onAddToCart}>Añadir 🛒</Button>
-//                 </div>
-//             </Card.Footer>
-//         </Card>
-//     )
-// }
-// export default CardPizza; 
-
-import React from 'react'
-import Pizza from './Pizza'
-
-const CardPizza = ({pizzas}) => {
+const CardPizza = ({ name, desc, price, ingredients, img }) => {
   return (
-    <div className='container'>
-<div className='row'>
-    {pizzas.map((pizza)=>(
-        <div className='col-md-4' key={pizza.id}>
-            <Pizza pizza={pizza}/>
-        </div>
-    ))}
-</div>
+   <Card className="border border-dark">
+        <Card.Img  variant="top" src={img}/>      
+          <Card.Body>          
+            <Card.Title className="text-center">
+              <h5>{name}</h5> 
+              <h6>{desc}</h6></Card.Title> 
+              <hr/>
+              <ul>
+                {ingredients.map((ingredient) => (
+                <li key={ingredient}>🍕 {ingredient}</li>))}
+              </ul>
+              <hr/>
+            <Card.Text className="text-center">
+            <strong>Precio: </strong>${price}</Card.Text>           
+              <div className="d-flex justify-content-around" >
+                <Button variant="outline-dark btn">Ver más</Button>
+                <Button className="btn btn-dark">Añadir 🛒</Button> 
+              </div>
+          </Card.Body>
+      </Card>  
+  );
+}   
 
+// CardPizza.propTypes = {
+//     name: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+//     img: PropTypes.string.isRequired,
+// };
 
-    </div>
-
-  
-  )
-}
-
-export default CardPizza
+export default CardPizza;

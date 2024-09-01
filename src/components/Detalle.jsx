@@ -16,7 +16,7 @@ const Detalle = () => {
     },[])
   return (
     <div>
-<CardPizza/>
+    <CardPizza/>
 
     </div>
   )

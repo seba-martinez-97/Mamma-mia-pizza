@@ -1,94 +1,51 @@
-// import React from 'react'
-// import { useState, useEffect } from 'react'
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import { Button, Card } from 'react-bootstrap';
-// const Pizza = () => {
-//     const [pizza , setPizza] = useState ([])
+import { useEffect, useState} from "react"
+import {Card, Button, Container, Row, Col } from "react-bootstrap";
 
-//     const obtenerInformacion = async()=>{
-//         const respuesta = await fetch('http://localhost:5000')
-//         const data = await respuesta.json()
-//         console.log(data)
-//         setPizza(data)
-//     }
-
-//     useEffect(()=>{
-//         obtenerInformacion()
-//      },[])
-
-//   return (
+function Pizza() {
+    const [pizza, setPizza] = useState({});
     
-//     <div className='container'>
-//       <div className='row'>
-//       <Card style={{ width: '18rem' }}>
-//       <Card.Img variant="top" src={pizza.img} />
-//       <Card.Body>
-//         <Card.Title>{pizza.desc}</Card.Title>
-//         <Card.Text>
-//          {pizza}
-//         </Card.Text>
-//         <Button variant="primary">Go somewhere</Button>
-//       </Card.Body>
-//     </Card>
-
-
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Pizza
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
-// import React from 'react'
-
-// const Pizza = ({pizzas}) => { 
-//   console.log(pizzas)
-//   return (
-//     <div className='container'>
-// <div className='row'>
-
-//     {
-//       pizzas.map((pizza)=>(
-//        <div className='col-md-4' key={pizza.id}>
-// <Card >
-//       <Card.Img variant="top" src={Pizza.img} />
-//       <Card.Body>
-//         <Card.Title>{pizza.name}</Card.Title>
-//         <Card.Text>
-//         {pizza.desc}
-//         </Card.Text>
-//         <Button variant="primary">{pizza.price}</Button>
-//       </Card.Body>
-//     </Card>
-//        </div> 
-//       ))
-//     }
-// </div>
-//     </div>
-//   )
-// }
-
-// export default Pizza
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import React from 'react'
-
-const Pizza = ({pizza}) => {
-  return (
-    <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src={pizza.img} />
-    <Card.Body>
-      <Card.Title>{pizza.name}</Card.Title>
-      <Card.Text>
-        {pizza.desc}
-      </Card.Text>
-      <Button className='' variant="primary">{pizza.price}</Button>
-    </Card.Body>
-  </Card>
-
+    const getPizza = async () => {
+        const resp = await fetch("http://localhost:5000/api/pizzas/p001");
+        const dataPizza = await resp.json();
+    
+        setPizza(dataPizza);
+      };
   
-  )
-}
+    useEffect(() => {
+      getPizza();
+    }, []); 
+  
+    return (
+        <>
+        <Container className="mt-4">
+            <Row className="justify-content-center">        
+                <Col md={4} className="mb-4 d-flex">
+                    <Card className="border border-dark">
+                    <Card.Img  variant="top" src={pizza.img}/>      
+                        <Card.Body>          
+                            <Card.Title className="text-center">
+                                <h5>{pizza.name}</h5> 
+                                <h6>{pizza.desc}</h6></Card.Title> 
+                                <hr/>
+                                <ul>
+                                    {pizza.ingredients?.map((ingredient) => (
+                                    <li key={ingredient}>🍕 {ingredient}</li>))}
+                                </ul>
+                                <hr/>
+                                <Card.Text className="text-center">
+                                <strong>Precio: </strong>${pizza.price}</Card.Text>           
+                                <div className="d-flex justify-content-around" >
+                                    <Button variant="outline-dark btn">Ver más</Button>
+                                    <Button className="btn btn-dark">Añadir 🛒</Button> 
+                                </div>
+                        </Card.Body>
+                    </Card>   
+                </Col>          
+            </Row>
+        </Container>     
+        </>
+     )
+    }
+    export default Pizza;
+    
 
-export default Pizza
