@@ -24,5 +24,5 @@ Para este hito se realiza el levantamiento y consumo de una Api.
 
 Hit 5 - Pizzería Mamma Mía 
 
-Para este hiyo se utiliza react router-Dom con la finalidad de poder utilizar los botones desplegados en la pagina web
+Para este hito se utiliza react router-Dom con la finalidad de poder utilizar los botones desplegados en la pagina web
 
