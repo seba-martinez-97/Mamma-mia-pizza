@@ -7,8 +7,8 @@ const NotFound = () => {
   return (
     <>
     
-    <Spinner animation="border" />
-    <p>Pagina no encontrada</p>
+    <Spinner animation="border" className='aling-item-center' />
+    <p className='text-center'>Pagina no encontrada</p>
     <Link to="/">redirijir al Home</Link> 
     </>
   )
