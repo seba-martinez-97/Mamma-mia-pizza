@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { toLocalString } from "../utils/toLocalString"
 
 import React from 'react'
@@ -17,21 +18,16 @@ const Navbar =()=> {
                   Pizzería Mamma Mía!
                 </a>
                 <nav className='flex flex-wrap items-center justify-between text-white text-xs mr-5'>
-                  <a
+
+                  <Link to="/home"
                     className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
                     href='#'
                   >
                     🍕Home
-                  </a>
+                  </Link>
 
                   {token ? (
                     <>
-                      <a
-                        className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
-                        href='#'
-                      >
-                        😎Profile
-                      </a>
                       <a
                         className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
                         href='#'
@@ -41,27 +37,35 @@ const Navbar =()=> {
                     </>
                   ) : (
                     <>
-                      <a
+                     <Link to="/profile"
+                        className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
+                        href='#'
+                      >
+                        😎Profile
+                      </Link>
+                      <Link to="/login"
                         className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
                         href='#'
                       >
                         🔐Login
-                      </a>
-                      <a
+                      </Link>
+                      <Link to="/register"
                         className='text-white hover:text-gray-900 hover:bg-white border rounded px-2 py-1 border-white mr-2'
                         href='#'
                       >
                         🔐Register
-                      </a>
+                      </Link>
                     </>
                   )}
                 </nav>
               </div>
+              <Link to="/cart">
               <div className='flex items-center'>
                 <button className='text-cyan-500 mr-1 border rounded px-2 py-1 border-cyan-500 hover:bg-cyan-500 hover:text-white'>
                   🛒Total: {toLocalString(total)}
                 </button>
               </div>
+             </Link>
             </div>
             <div className='w-full text-white md:hidden'>
               <button className='flex items-center p-2 hover:text-gray-300'>

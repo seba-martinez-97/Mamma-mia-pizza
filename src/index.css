@@ -23,7 +23,7 @@ form {
 .registro {
   text-align: center;
   font-size: 100px;
-  margin-bottom: 170px;
+  margin-bottom: 216px;
 }
 
  p {
@@ -33,6 +33,13 @@ form {
 
 .boton{
   margin-bottom: 200px;
+}
+
+.profile{
+text-align: center;
+font-size: 100px;
+margin-bottom: 259px;
+
 }
 
 
