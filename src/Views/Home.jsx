@@ -1,43 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import CardPizza from '../components/CardPizza';
-import { Container, Row, Col } from "react-bootstrap";
+import { CartContext } from "../context/CartContext";
+
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([])
 
-  const getPizzas = async () => {
-    const respuesta = await fetch ("http://localhost:5000/api/pizzas")
-    const pizzas = await respuesta.json()
+  const { cart } = useContext(CartContext); 
+  const [pizzas, setPizzas] = useState([]);
 
-    setPizzas(pizzas)
+  const obtenerInfo = async () => {
+    let respuesta = await fetch("http://localhost:5000/api/pizzas");
+    let data = await respuesta.json();
+    setPizzas(data)
   }
 
-  useEffect (() => {
-    getPizzas()
-  }, [])
+  useEffect(() => {
+    obtenerInfo();
+  }, []);
 
   return (
-    <>
-      <Header></Header>
-        <Container className="mt-4">
-          <Row className="justify-content-center">        
-            {pizzas.map((pizza) => (
-              <Col md={4} className="mb-4 d-flex" key={pizza.id}>
-                <CardPizza 
-                  id={pizza.id}
-                  img={pizza.img}
-                  name={pizza.name}
-                  desc={pizza.desc}                         
-                  ingredients={pizza.ingredients}                         
-                  price={pizza.price}/>
-              </Col>
-            ))}               
-          </Row>
-            </Container>
-    </>
+    <div>
+      <Header />
+      <div className="d-flex justify-content-around mt-4">
+        {cart.filter(pizza => !pizza.agregado) 
+             .map((pizza) => (
+          <CardPizza
+            key={pizza?.id}
+            id={pizza?.id}
+            name={pizza?.name}
+            price={pizza?.price}
+            ingredients={pizza?.ingredients}
+            img={pizza?.img}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
-
 
 export default Home;

@@ -1,24 +1,30 @@
-import React from 'react'
-import Button from 'react-bootstrap/Button';
 
+import React from "react";
 
+const mail = "usuariodejemplo@mail.com"
 
 const Profile = () => {
   return (
-    <div className='profile'>
-      <h1>
-      Datos personales:
-      </h1>
-      <br />
-      <h4>
-        Holamundo@gmail.com
-      </h4>
+    <form>
+      <fieldset disabled>
+        <legend>Usuario Registrado</legend>
+        <div className="mb-3">
+          <label htmlFor="disabledTextInput" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            id="disabledTextInput"
+            className="form-control"
+            placeholder={mail}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Cerrar Sesión
+        </button>
+      </fieldset>
+    </form>
+  );
+};
 
-    <Button variant="primary" size="lg">
-          Cerrar sesion
-        </Button>
-    </div>
-  )
-}
-
-export default Profile
+export default Profile;

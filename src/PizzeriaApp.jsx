@@ -4,10 +4,12 @@ import Register from './Views/Register'
 import Login from './Views/Login'
 import Cart from './Views/Cart'
 import Footer from './components/Footer'
-import Pizza from './components/Pizza'
+import Pizza from './Views/Pizza'
 import {Route,Routes} from "react-router-dom"
 import Profile from './Views/Profile'
 import NotFound from './Views/NotFound'
+
+
 export function PizzeriaApp() {
  
   return (
@@ -20,7 +22,7 @@ export function PizzeriaApp() {
      <Route exact path='/profile' element={<Profile/>}/>
      <Route exact path='/cart' element={ <Cart/>}/>
      <Route exact path='/pizza/p001' element={<Pizza /> }/>
-     <Route  path='*' element={<NotFound/>}/>
+     <Route  path='/' element={<NotFound/>}/>
      </Routes>
      <Footer/>
     </>
