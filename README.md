@@ -22,7 +22,10 @@ Para esto hito se creo un nuevo componente llamado Cart con la finalidad de aña
 Hito 4 - Pizzería Mamma Mía
 Para este hito se realiza el levantamiento y consumo de una Api.
 
-Hit 5 - Pizzería Mamma Mía 
+Hito 5 - Pizzería Mamma Mía 
 
 Para este hito se utiliza react router-Dom con la finalidad de poder utilizar los botones desplegados en la pagina web
 
+Hito 6 - Pizzería Mamma Mía
+
+Para este hito se realizo la implementacion de Context en la App
