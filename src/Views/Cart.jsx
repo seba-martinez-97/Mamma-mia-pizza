@@ -1,66 +1,52 @@
-
-
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
+import {Card, Button } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
+import { formatNumber } from "../Scripts";
+import { useUser } from "../context/UserContext";
+
 
 const Cart = () => {
-  const { cart, setCart } = useContext(CartContext); 
-
-  
-  const increaseQuantity = (id) => {
-    setCart(cart.map(pizza =>
-      pizza.id === id ? { ...pizza, quantity: pizza.quantity + 1 } : pizza
-    ));
-  };
+  const {cart, total, decreaseQuantity, increaseQuantity} = useContext(CartContext);
+  const { token } = useUser()
 
 
-  const decreaseQuantity = (id) => {
-    setCart(cart.map(pizza => {
-      if (pizza.id === id) {
-        const newQuantity = pizza.quantity - 1;
-        return newQuantity > 0 
-          ? { ...pizza, quantity: newQuantity } 
-          : { ...pizza, agregado: false, quantity: 0 };
-      }
-      return pizza;
-    }));
-  };
-
- 
-  const total = cart
-    .filter(pizza => pizza.agregado) 
-    .reduce((acc, pizza) => acc + pizza.price * pizza.quantity, 0);
-
-  
   return (
-    <div className="container mt-4 d-flex flex-column">
-      <h3>🛒 Carrito de Compras</h3>
-      {cart.filter(pizza => pizza.agregado).length > 0 ? ( 
-        <>
-          <ul className="list-group">
-            {cart.filter(pizza => pizza.agregado).map((pizza) => ( 
-              <li key={pizza.id} className="list-group-item container text-center">
-                <div className='row align-items-center'>
-                  <img className='col' src={pizza.img} alt={pizza.name} style={{ width: '50px' }} />
-                  <div className='col'>{pizza.name}</div>
-                  <div className='col'>${pizza.price.toLocaleString()}</div>
-                  <div className='col'>
-                    <button onClick={() => decreaseQuantity(pizza.id)} className="btn btn-outline-danger">-</button>
-                    <span className="mx-2">{pizza.quantity}</span>
-                    <button onClick={() => increaseQuantity(pizza.id)} className="btn btn-outline-success">+</button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <h4 className="mt-4">Total: ${total.toLocaleString()}</h4>
-          <button className="btn btn-primary mt-3">Pagar</button>
-        </>
+    <Card className="m-4 border border-dark pt-3 text-center d-flex align-items-center">
+      <h4>Carrito de Compras</h4>
+      {cart.length === 0 ? (
+        <h5 className="text-primary">Tu carrito está vacío</h5>
       ) : (
-        <p className="text-center">Tu carrito está vacío.</p>
+      <div className="Card-Container"> 
+        {cart.map((p) => (
+          <div className="PizzaCart" key={p.pizzaId}>  
+              <Card.Img src={p.pizzaImg} alt={p.pizzaName} />                                
+              <h6><strong>{p.pizzaName}</strong></h6>
+              <h6>${p.pizzaPrice}</h6>
+              <div className="Cart-Botones">
+                <Button onClick={() => decreaseQuantity(p.pizzaId)} className="btn btn-dark m-2">-</Button>
+                <h6>{p.quantity}</h6>
+                <Button onClick={() => increaseQuantity(p.pizzaId)} className="btn btn-dark m-2">+</Button>
+                <strong className="m-2 p-2">Total:$ {formatNumber(p.pizzaPrice * p.quantity)}</strong>
+              </div>
+          </div>
+        ))}  
+          <div className="pt-3 text-center">
+            <h5>Total Carrito: {formatNumber(total)}</h5>   
+          </div>              
+          <div>
+          {token ?(
+            <Button className="btn btn-primary m-2 p-2 text-center">Pagar</Button>
+          )
+          : (
+            ''
+          )}
+            <Link to="/" className="btn btn-dark m-2 text-center">Seguir comprando</Link>
+          </div>                      
+      </div>     
       )}
-    </div>
-  );
-};
+    </Card>      
+    );
+  };
 
 export default Cart;

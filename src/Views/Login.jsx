@@ -1,69 +1,60 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import { Button, Form} from "react-bootstrap";
+import { useNavigate } from "react-router";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const [password, setPassword] = useState("");
 
-    const validarDatos = (e) => {
-        e.preventDefault()
+    const navigate=useNavigate();
 
-        let html = "";
-        let mensaje_error = document.querySelector("#esError");
-        let mensaje_exito = document.querySelector("#exito");
-
-        if (!email.trim() || !pass.trim()) {
-            html += `Todos los campos son obligatorios.`
-            mensaje_error.innerHTML = html;
-            mensaje_exito.innerHTML = null;
-            return
-        }
-        if (pass.length < 6) {
-            html += "La contraseña debe tener mínimo 6 carácteres"
-            mensaje_error.innerHTML = html;
-            mensaje_exito.innerHTML = null;
-            return
-        }
-        else {
-            html += `Datos ingresados exitósamente, formulario enviado.`
-            mensaje_exito.innerHTML = html;
-            mensaje_error.innerHTML = null;
-            setEmail("");
-            setPass("");
-            return
-        }
+    const emailCheck = (email) => {
+        const check = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
+        return check.test(String(email).toLowerCase())
     }
 
-    return (
-        <>
-            <form className="formulario" onSubmit={validarDatos}>
-                {<p className="validacion_error" id="esError"></p>}
-                {<p className="validacion_exito" id="exito"></p>}
-                {/* error ? <p className="validacion_error">Todos los campos son obligatorios, la contraseña debe tener mínimo 6 carácteres y ambas deben coincidir.</p> :
-            <p className="validacion_exito">Datos ingresados exitósamente, formulario enviado.</p> */}
-                <div className="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        placeholder="Ingresa tu email" />
-                    <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con los demás.</small>
-                </div>
-                <div className="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input
-                        type="password"
-                        name="password"
-                        className="form-control"
-                        onChange={(e) => setPass(e.target.value)}
-                        value={pass}
-                        placeholder="Ingresa una contraseña" />
-                </div>
-                <button type="submit" className="btn btn-primary mt-4 text-center">Enviar</button>
-            </form>
-        </>
-    )
-}
-export default Login
+
+  const validarDatos= (e) => {
+    e.preventDefault();
+
+    if (!emailCheck(email)) {
+        alert("Ingrese un email válido")
+        return false
+    }
+    if (email ==="" || password ==="") {
+      alert("Todos los campos son obligatorios");
+      navigate("/register");
+    }
+
+    if (password.length <6) {
+        alert("La contraseña debe tener al menos 6 caracteres");
+        navigate("/register");;
+    }
+    alert("Inicio de sesion exitoso!")
+    setEmail("")
+    setPassword("")
+    navigate("/Profile");
+  };
+
+  return (
+    <div className="d-flex justify-content-center align-items-center">   
+        <div className="d-flex flex-column justify-content-center align-items-center border border-2 border-dark rounded-2 gap-2 mt-2 mb-2 pt-3 pb-3" style={{ width: "350px" }}>                      
+        <h3>Inicio de Sesion</h3>     
+        <Form>    
+        <div className="form-label mr-4 mx-4">
+            <label>Email:</label>
+            <input type="email" className="form-control" placeholder="Ingrese Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+        </div>
+        <div className="form-group mr-4 mx-4">
+            <label>Contraseña:</label>
+            <input type="password" className="form-control" placeholder="Ingrese Password" value={password} onChange={(e) => setPassword(e.target.value)}required/>
+        </div>
+         <Button type="submit" className="btn btn-dark mb-2 mr-4 mx-4" onClick={(e)=> validarDatos(e)}>Iniciar Sesión</Button>                        
+        </Form>
+        </div>           
+    </div>
+  );
+};
+
+export default Login;

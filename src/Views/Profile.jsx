@@ -1,30 +1,28 @@
-
 import React from "react";
-
-const mail = "usuariodejemplo@mail.com"
+import {Form} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import perfil from '../assets/img/perfil.jpeg';
 
 const Profile = () => {
-  return (
-    <form>
-      <fieldset disabled>
-        <legend>Usuario Registrado</legend>
-        <div className="mb-3">
-          <label htmlFor="disabledTextInput" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            id="disabledTextInput"
-            className="form-control"
-            placeholder={mail}
-          />
+    return (
+        <div className="d-flex justify-content-center align-items-center">   
+            <div className="d-flex flex-column justify-content-center align-items-center border border-2 border-dark rounded-2 gap-2 mt-2 mb-2 pt-3 pb-3" style={{ width: "350px" }}>                      
+            <img src={perfil} alt='Imegn perfil'/>
+            <h4>Pizzeria Mamma Mia</h4>    
+            <Form>                  
+            <div className="form-label mr-4 mx-4">
+               Sebastian Martinez
+            </div>
+            <div className="form-group mr-4 mx-4">
+               sebamartinez1797@gmail.com
+            </div>
+            <div className="m-4">
+            <Link to="/" className='boton3 text-white'>Cerrar Sesion</Link>
+            </div>               
+            </Form>
+            </div>            
         </div>
-        <button type="submit" className="btn btn-primary">
-          Cerrar Sesión
-        </button>
-      </fieldset>
-    </form>
-  );
-};
+    );
+}
 
 export default Profile;
