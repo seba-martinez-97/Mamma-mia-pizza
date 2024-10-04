@@ -1,121 +1,82 @@
-// import React, { useState } from "react"
+import React, { useState } from "react";
+import { Button, Form} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
-// const Register = () => {
-//     const [email, setEmail] = useState("");
-//     const [pass, setPass] = useState("");
-//     const [repass, setRepass] = useState("");
+const Register = () => {
+    const { token, register } = useUser(); 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword]= useState ("");
+    const [loading, setLoading] = useState(false);
 
-//     /*const [error, setError] = useState(false);*/
+    const navigate =useNavigate()
 
-//     const validarDatos =(e)=>{
-//         e.preventDefault()
+    if (token) {
+        navigate("/")
+    }
 
-//         let html = "";
-//         let mensaje_error = document.querySelector("#esError");
-//         let mensaje_exito = document.querySelector("#exito");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+          
+        if (!email || !password || !confPassword  ) {
+            alert('Todos los campos son obligatorios.');
+            return;
+        }
 
-//         if(!email.trim() || !pass.trim() || !repass.trim())  {
-//             html += `Todos los campos son obligatorios.`
-//             mensaje_error.innerHTML = html;
-//             mensaje_exito.innerHTML = null;
-//             return
-//         } 
-//         if(pass.length < 6){
-//             html += "La contraseña debe tener mínimo 6 carácteres"
-//             mensaje_error.innerHTML = html;
-//             mensaje_exito.innerHTML = null;
-//             return
-//         }
-//         if(pass !== repass){
-//             html += "Las contraseñas no coinciden"
-//             mensaje_error.innerHTML = html;
-//             mensaje_exito.innerHTML = null;
-//             return
-//         }
-//         else{
-//             html += `Datos ingresados exitósamente, formulario enviado.`
-//             mensaje_exito.innerHTML = html;
-//             mensaje_error.innerHTML = null;
-//             setEmail("");
-//             setPass("");
-//             setRepass("");
-//             return
-//         }
+        if (password.length < 6) {
+            alert('La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }
+        if (password !== confPassword){
+            alert ("El password y la confirmación del password deben ser iguales")
+            setPassword(""); 
+            setConfPassword("");
+            return
+        }
 
-//         /*setError(false);*/
-//     }
+        setLoading(true);
 
-//     return (
-//         <>
-//             <form className="formulario" onSubmit={validarDatos}>
-//                 {<p className="validacion_error" id="esError"></p>}
-//                 {<p className="validacion_exito" id="exito"></p>}
-//                 {/* error ? <p className="validacion_error">Todos los campos son obligatorios, la contraseña debe tener mínimo 6 carácteres y ambas deben coincidir.</p> :
-//                 <p className="validacion_exito">Datos ingresados exitósamente, formulario enviado.</p> */}
-//                 <div className="form-group">
-//                     <label for="exampleInputEmail1">Email</label>
-//                     <input 
-//                     type="email"
-//                     name="email" 
-//                     className="form-control" 
-//                     onChange={(e)=>setEmail(e.target.value)}
-//                     value={email}
-//                     placeholder="Ingresa tu email"/>
-//                         <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con los demás.</small>
-//                 </div>
-//                 <div className="form-group">
-//                     <label for="exampleInputPassword1">Contraseña</label>
-//                     <input 
-//                     type="password" 
-//                     name="password"
-//                     className="form-control"
-//                     onChange={(e)=>setPass(e.target.value)}
-//                     value={pass}
-//                     placeholder="Ingresa una contraseña"/>
-//                 </div>
-//                 <div className="form-group">
-//                     <label for="exampleInputPassword1">Confirma la Contraseña</label>
-//                     <input 
-//                     type="password"
-//                     name="repassword" 
-//                     className="form-control"
-//                     onChange={(e)=>setRepass(e.target.value)}
-//                     value={repass}
-//                     placeholder="Re-ingresa la contraseña"/>
-//                 </div>
-//                 <button type="submit" className="btn btn-primary mt-4 text-center">Enviar</button>
-//             </form>
-//         </>
-//     )
-// }
-
-// export default Register
-
-import React from "react";
-import {Form} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import perfil from '../assets/img/perfil.jpeg';
-
-const Profile = () => {
+        try {
+                await register(email, password, confPassword);
+                 
+              } catch (error) {
+                alert('Error al registrarse. Intenta nuevamente.');
+                console.error(error); 
+              
+              } finally {
+                setLoading(false);                 
+              } 
+        
+        setEmail("");      
+        setPassword(""); 
+        setConfPassword("");
+    }
+          
+    
     return (
         <div className="d-flex justify-content-center align-items-center">   
             <div className="d-flex flex-column justify-content-center align-items-center border border-2 border-dark rounded-2 gap-2 mt-2 mb-2 pt-3 pb-3" style={{ width: "350px" }}>                      
-            <img src={perfil} alt='Imegn perfil'/>
-            <h4>Pizzeria Mamma Mia</h4>    
-            <Form>                  
+            <h3>Formulario de Registro</h3>    
+            <Form onSubmit={handleSubmit}>                 
             <div className="form-label mr-4 mx-4">
-              Sebastian Martinez
+                <label>Email:</label>
+                <input type="email" className="form-control" placeholder="Ingrese Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             </div>
             <div className="form-group mr-4 mx-4">
-               sebamartinez1797@gmail.com
+                <label>Contraseña:</label>
+                <input type="password" className="form-control" placeholder="Ingrese Password" value={password} onChange={(e) => setPassword(e.target.value)}required/>
             </div>
-            <div className="m-4">
-            <Link to="/" className='boton3 text-white'>Cerrar Sesion</Link>
-            </div>               
+            <div className="form-group mr-4 mx-4">          
+                <label>Confirmar Password</label>
+                <input type="password" className="form-control" placeholder="Confirme password" value={confPassword} onChange={(e) => setConfPassword (e.target.value)} required/>
+            </div>
+                <Button  type="submit" className="btn btn-dark mt-3"  disabled={loading}>{loading ? 'Cargando...' : 'Registrarme'}</Button>                   
             </Form>
             </div>            
         </div>
     );
+
 }
 
-export default Profile;
+export default Register;

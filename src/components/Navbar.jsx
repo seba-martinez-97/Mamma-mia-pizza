@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
-import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { formatNumber } from "../Scripts";
 import { useUser } from "../context/UserContext";
 
 function NavbarApp() {
   const { total } = useContext(CartContext);
-  const { token } = useUser()
+  const { token, logout } = useUser();
+  const navigate = useNavigate();
   const setActiveClass = ({ isActive }) => (isActive ?  "active" : "NoActive");
+
+  const handleLogout = () => {
+    logout();
+    navigate ("/login");
+  }
 
   return (
     <Navbar collapseOnSelect expand="lg" className="custom-navbar" sticky="top">
@@ -23,7 +29,7 @@ function NavbarApp() {
                             {token ? (
                             <>
                                 <NavLink to="/profile" className={setActiveClass}>🔓Profile</NavLink>                
-                                <NavLink to="/Logout" className={setActiveClass}>🔒Logout</NavLink>
+                                <NavLink to="/Logout" className={setActiveClass} onClick={handleLogout}>🔒Logout</NavLink>
                             </>
                             ) : (
                             <>

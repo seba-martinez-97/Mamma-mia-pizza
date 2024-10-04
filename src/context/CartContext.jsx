@@ -1,30 +1,3 @@
-
-// import {createContext, useState, useEffect} from "react";
-// 	export const CartContext = createContext();
-
-// 	const CartProvider = ({children}) => { 
-
-// 			const [cart, setCart] = useState([]) 		
-
-// 			const getData = async() => {
-// 			    const response = await fetch ("http://localhost:5000/api/pizzas")
-// 			    const data = await response.json()
-//                 let allData = data.map(item => ({...item, agregado: false}))
-// 			    setCart(allData) 
-// }
-
-// 		useEffect(()=>{ 
-//             getData ();
-//         },[])
-		
-// 	return (
-// 			<CartContext.Provider value = {{cart, setCart}}>
-// 				{children}
-// 			</CartContext.Provider>
-// )
-// }
-// 	export default CartProvider
-
 import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext();
@@ -67,16 +40,23 @@ const CartProvider = ({ children }) => {
     }
     setCart(data); 
   };
-	
+
+  const clearCart = () => {
+    setCart([])
+  };
+
+
   const calculateTotal = () => {
     const newTotal = cart.reduce(
       (total, item) => total + item.pizzaPrice * item.quantity,0);
     setTotal(newTotal);
   };
 
+
+
   return (
     <CartContext.Provider
-      value={{cart,addToCart,increaseQuantity,decreaseQuantity,total}}
+      value={{cart,addToCart,increaseQuantity,decreaseQuantity,total, clearCart}}
     >
       {children}
     </CartContext.Provider>

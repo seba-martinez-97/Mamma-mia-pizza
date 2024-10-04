@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import PropTypes from 'prop-types';
 import {Button, Card} from "react-bootstrap";
 import { CartContext } from "../context/CartContext";

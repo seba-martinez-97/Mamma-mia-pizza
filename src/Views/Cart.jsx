@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {Card, Button } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
@@ -7,9 +7,32 @@ import { useUser } from "../context/UserContext";
 
 
 const Cart = () => {
-  const {cart, total, decreaseQuantity, increaseQuantity} = useContext(CartContext);
-  const { token } = useUser()
+  const {cart, total, decreaseQuantity, increaseQuantity, clearCart} = useContext(CartContext);
+  const { token } = useUser();
 
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/checkouts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ cartItems: cart, total })
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(errorText || 'Error al procesar el pago')
+      }
+      clearCart()
+      alert('Pago Exitoso! Gracias por tu compra!')
+
+    } catch (error) {
+      console.error('Error en el checkout:', error.message)
+      alert('Error en el checkout: ' + error.message)
+    }
+  }
 
   return (
     <Card className="m-4 border border-dark pt-3 text-center d-flex align-items-center">
@@ -35,12 +58,7 @@ const Cart = () => {
             <h5>Total Carrito: {formatNumber(total)}</h5>   
           </div>              
           <div>
-          {token ?(
-            <Button className="btn btn-primary m-2 p-2 text-center">Pagar</Button>
-          )
-          : (
-            ''
-          )}
+            <Button className="btn btn-primary m-2 p-2 text-center"  disabled={!token || cart.length === 0} onClick={handlePayment}>Pagar</Button>
             <Link to="/" className="btn btn-dark m-2 text-center">Seguir comprando</Link>
           </div>                      
       </div>     
