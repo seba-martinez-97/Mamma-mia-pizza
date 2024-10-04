@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import CardPizza from '../components/CardPizza';
+import Header from '../Components/Header';
+import CardPizza from '../Components/CardPizza';
 import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {

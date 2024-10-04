@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import { formatNumber } from "../Scripts";
+import { formatNumber } from "../scripts";
 import { useUser } from "../context/UserContext";
 
 function NavbarApp() {

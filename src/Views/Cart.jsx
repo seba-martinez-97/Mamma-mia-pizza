@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import {Card, Button } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { formatNumber } from "../Scripts";
+import { formatNumber } from "../scripts";
 import { useUser } from "../context/UserContext";
 
 
